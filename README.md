@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # ICPWork Platform
 
 
@@ -193,3 +194,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 
 For questions or support, please contact the ICPWork team.
+=======
+# backend-canisters
+Canister for the ICPWork core modules 
+>>>>>>> dc02adb6d53a189bc7260d0930da70683965bc72
