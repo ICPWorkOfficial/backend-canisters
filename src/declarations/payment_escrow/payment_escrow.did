@@ -1,0 +1,43 @@
+type PaymentId = nat64;
+type ProjectId = nat64;
+type Payment = record {
+  id : PaymentId;
+  client_id : principal;
+  freelancer_id : principal;
+  project_id : ProjectId;
+  amount : nat64;
+  status : variant {
+    Pending;
+    Escrowed;
+    Released;
+    Refunded;
+    Disputed;
+  };
+  created_at : nat64;
+  updated_at : nat64;
+};
+
+type PaymentError = variant {
+  NotFound;
+  AlreadyExists;
+  Unauthorized;
+  InvalidStatus;
+  OperationFailed;
+};
+
+type PaymentResult = variant {
+  ok : Payment;
+  err : PaymentError;
+};
+
+service : {
+  create_escrow : (ProjectId, principal, nat64) -> (PaymentResult);
+  deposit_to_escrow : (PaymentId) -> (PaymentResult);
+  dispute_payment : (PaymentId) -> (PaymentResult);
+  get_client_payments : (principal) -> (vec Payment) query;
+  get_freelancer_payments : (principal) -> (vec Payment) query;
+  get_payment : (PaymentId) -> (PaymentResult) query;
+  get_project_payments : (ProjectId) -> (vec Payment) query;
+  refund_payment : (PaymentId) -> (PaymentResult);
+  release_payment : (PaymentId) -> (PaymentResult);
+}

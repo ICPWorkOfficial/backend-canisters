@@ -1,0 +1,41 @@
+type ThreadResult = 
+ variant {
+   err: text;
+   ok: Thread;
+ };
+type Thread = 
+ record {
+   id: nat;
+   last_message_time: int;
+   user1_id: principal;
+   user2_id: principal;
+ };
+type MessagesResult = 
+ variant {
+   err: text;
+   ok: vec Message;
+ };
+type MessageResult = 
+ variant {
+   err: text;
+   ok: Message;
+ };
+type Message = 
+ record {
+   content: text;
+   id: nat;
+   read: bool;
+   receiver_id: principal;
+   sender_id: principal;
+   thread_id: nat;
+   timestamp: int;
+ };
+service : {
+  createThread: (other_user_id: principal) -> (ThreadResult);
+  getMessage: (message_id: nat) -> (MessageResult) query;
+  getThreadMessages: (thread_id: nat) -> (MessagesResult) query;
+  getUnreadMessageCount: (user_id: principal) -> (nat) query;
+  getUserThreads: (user_id: principal) -> (vec Thread) query;
+  markMessageAsRead: (message_id: nat) -> (MessageResult);
+  sendMessage: (receiver_id: principal, content: text) -> (MessageResult);
+}

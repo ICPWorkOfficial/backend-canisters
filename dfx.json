@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "canisters": {
+    "user_management": {
+      "type": "motoko",
+      "main": "src/backend/user_management/main.mo"
+    },
+    "project_management": {
+      "type": "motoko",
+      "main": "src/backend/project_management/main.mo"
+    },
+    "payment_escrow": {
+      "type": "rust",
+      "candid": "src/backend/payment_escrow/payment_escrow.did",
+      "package": "payment_escrow",
+      "source": ["src/backend/payment_escrow/Cargo.toml", "src/backend/payment_escrow/src"]
+    },
+    "messaging_system": {
+      "type": "motoko",
+      "main": "src/backend/messaging_system/main.mo"
+    },
+    "bounties": {
+      "type": "motoko",
+      "main": "src/backend/bounties/main.mo"
+    },
+    "hackathons": {
+      "type": "motoko",
+      "main": "src/backend/hackathons/main.mo"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  }
+}

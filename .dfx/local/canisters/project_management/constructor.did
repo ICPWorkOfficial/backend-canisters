@@ -1,0 +1,74 @@
+type Result = 
+ variant {
+   err: text;
+   ok: record {
+         Proposal;
+         Project;
+       };
+ };
+type ProposalStatus = 
+ variant {
+   Accepted;
+   Pending;
+   Rejected;
+   Withdrawn;
+ };
+type ProposalResult = 
+ variant {
+   err: text;
+   ok: Proposal;
+ };
+type Proposal = 
+ record {
+   bid_amount: nat;
+   cover_letter: text;
+   created_at: int;
+   delivery_time: nat;
+   freelancer_id: principal;
+   id: nat;
+   project_id: nat;
+   status: ProposalStatus;
+ };
+type ProjectStatus = 
+ variant {
+   Cancelled;
+   Completed;
+   InProgress;
+   Open;
+   UnderReview;
+ };
+type ProjectResult = 
+ variant {
+   err: text;
+   ok: Project;
+ };
+type Project = 
+ record {
+   budget: nat;
+   category: text;
+   client_id: principal;
+   created_at: int;
+   description: text;
+   freelancer_id: opt principal;
+   id: nat;
+   skills_required: vec text;
+   status: ProjectStatus;
+   title: text;
+   updated_at: int;
+ };
+service : {
+  acceptProposal: (proposal_id: nat) -> (Result);
+  createProject: (title: text, description: text, budget: nat, category:
+   text, skills_required: vec text) -> (ProjectResult);
+  getAllProjects: () -> (vec Project) query;
+  getClientProjects: (client_id: principal) -> (vec Project) query;
+  getFreelancerProjects: (freelancer_id: principal) -> (vec Project) query;
+  getFreelancerProposals: (freelancer_id: principal) -> (vec Proposal) query;
+  getProject: (project_id: nat) -> (ProjectResult) query;
+  getProjectProposals: (project_id: nat) -> (vec Proposal) query;
+  getProposal: (proposal_id: nat) -> (ProposalResult) query;
+  submitProposal: (project_id: nat, bid_amount: nat, delivery_time: nat,
+   cover_letter: text) -> (ProposalResult);
+  updateProjectStatus: (project_id: nat, status: ProjectStatus) ->
+   (ProjectResult);
+}

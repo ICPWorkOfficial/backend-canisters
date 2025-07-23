@@ -1,0 +1,32 @@
+type UserError = 
+ variant {
+   InvalidData;
+   UserAlreadyExists;
+   UserNotFound;
+ };
+type User = 
+ record {
+   bio: text;
+   created_at: int;
+   email: text;
+   id: principal;
+   is_verified: bool;
+   rating: float64;
+   skills: vec text;
+   username: text;
+ };
+type Result = 
+ variant {
+   err: UserError;
+   ok: User;
+ };
+service : {
+  createUser: (username: text, email: text, skills: vec text, bio: text) ->
+   (Result);
+  getAllUsers: () -> (vec User) query;
+  getUser: (user_id: principal) -> (Result) query;
+  updateRating: (user_id: principal, new_rating: float64) -> (Result);
+  updateUser: (username: text, email: text, skills: vec text, bio: text) ->
+   (Result);
+  verifyUser: (user_id: principal) -> (Result);
+}

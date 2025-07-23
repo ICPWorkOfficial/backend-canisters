@@ -1,0 +1,106 @@
+type ProjectStatus = 
+ variant {
+   Completed;
+   Draft;
+   Finalist;
+   Submitted;
+   UnderReview;
+   Winner;
+ };
+type ProjectResult = 
+ variant {
+   err: text;
+   ok: Project;
+ };
+type Project = 
+ record {
+   categories: vec text;
+   created_at: int;
+   description: text;
+   hackathon_id: nat;
+   id: nat;
+   status: ProjectStatus;
+   submission_link: text;
+   team_members: vec principal;
+   title: text;
+   updated_at: int;
+ };
+type ParticipantResult = 
+ variant {
+   err: text;
+   ok: Participant;
+ };
+type Participant = 
+ record {
+   hackathon_id: nat;
+   registered_at: int;
+   team_name: opt text;
+   user_id: principal;
+ };
+type LocationType = 
+ variant {
+   Hybrid;
+   InPerson;
+   Virtual;
+ };
+type HackathonStatus = 
+ variant {
+   Cancelled;
+   Completed;
+   Ongoing;
+   RegistrationClosed;
+   RegistrationOpen;
+ };
+type HackathonResult = 
+ variant {
+   err: text;
+   ok: Hackathon;
+ };
+type Hackathon = 
+ record {
+   categories: vec text;
+   created_at: int;
+   description: text;
+   end_date: int;
+   id: nat;
+   location: text;
+   location_type: LocationType;
+   organizer_id: principal;
+   participant_count: nat;
+   participant_limit: nat;
+   prize_pool: nat;
+   registration_deadline: int;
+   start_date: int;
+   status: HackathonStatus;
+   title: text;
+   updated_at: int;
+ };
+service : {
+  createHackathon: (title: text, description: text, location_type:
+   LocationType, location: text, prize_pool: nat, categories: vec text,
+   participant_limit: nat, registration_deadline: int, start_date: int,
+   end_date: int) -> (HackathonResult);
+  createProject: (hackathon_id: nat, title: text, description: text,
+   team_members: vec principal, submission_link: text, categories:
+   vec text) -> (ProjectResult);
+  getAllHackathons: () -> (vec Hackathon) query;
+  getHackathon: (hackathon_id: nat) -> (HackathonResult) query;
+  getHackathonParticipants: (hackathon_id: nat) -> (vec Participant) query;
+  getHackathonProjects: (hackathon_id: nat) -> (vec Project) query;
+  getHackathonsByStatus: (status: HackathonStatus) -> (vec Hackathon) query;
+  getOrganizerHackathons: (organizer_id: principal) -> (vec Hackathon) query;
+  getProject: (project_id: nat) -> (ProjectResult) query;
+  getUpcomingHackathons: () -> (vec Hackathon) query;
+  getUserParticipations: (user_id: principal) -> (vec Participant) query;
+  getUserProjects: (user_id: principal) -> (vec Project) query;
+  getWinningProjects: (hackathon_id: nat) -> (vec Project) query;
+  isUserRegistered: (hackathon_id: nat, user_id: principal) -> (bool) query;
+  registerForHackathon: (hackathon_id: nat, team_name: opt text) ->
+   (ParticipantResult);
+  submitProject: (project_id: nat) -> (ProjectResult);
+  updateHackathonStatus: (hackathon_id: nat, status: HackathonStatus) ->
+   (HackathonResult);
+  updateHackathonStatuses: () -> (nat);
+  updateProjectStatus: (project_id: nat, status: ProjectStatus) ->
+   (ProjectResult);
+}

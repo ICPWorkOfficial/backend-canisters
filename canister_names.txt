@@ -1,0 +1,10 @@
+Deployed canisters.
+URLs:
+  Backend canister via Candid interface:
+    bounties: http://127.0.0.1:4943/?canisterId=ufxgi-4p777-77774-qaadq-cai&id=uxrrr-q7777-77774-qaaaq-cai
+    hackathons: http://127.0.0.1:4943/?canisterId=ufxgi-4p777-77774-qaadq-cai&id=u6s2n-gx777-77774-qaaba-cai
+    messaging_system: http://127.0.0.1:4943/?canisterId=ufxgi-4p777-77774-qaadq-cai&id=uzt4z-lp777-77774-qaabq-cai
+    payment_escrow: http://127.0.0.1:4943/?canisterId=ufxgi-4p777-77774-qaadq-cai&id=umunu-kh777-77774-qaaca-cai
+    project_management: http://127.0.0.1:4943/?canisterId=ufxgi-4p777-77774-qaadq-cai&id=ulvla-h7777-77774-qaacq-cai
+    user_management: http://127.0.0.1:4943/?canisterId=ufxgi-4p777-77774-qaadq-cai&id=ucwa4-rx777-77774-qaada-cai
+satyamsinghal@Satyams-MacBook-Air icpwork-45a68698-2 % 

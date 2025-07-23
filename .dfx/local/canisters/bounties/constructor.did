@@ -1,0 +1,73 @@
+type SubmissionStatus = 
+ variant {
+   Accepted;
+   Pending;
+   Rejected;
+ };
+type SubmissionResult = 
+ variant {
+   err: text;
+   ok: BountySubmission;
+ };
+type Result = 
+ variant {
+   err: text;
+   ok: record {
+         BountySubmission;
+         Bounty;
+       };
+ };
+type BountySubmission = 
+ record {
+   bounty_id: nat;
+   created_at: int;
+   description: text;
+   id: nat;
+   solution_link: text;
+   status: SubmissionStatus;
+   submitter_id: principal;
+ };
+type BountyStatus = 
+ variant {
+   Awarded;
+   Closed;
+   Expired;
+   Open;
+ };
+type BountyResult = 
+ variant {
+   err: text;
+   ok: Bounty;
+ };
+type Bounty = 
+ record {
+   category: text;
+   created_at: int;
+   creator_id: principal;
+   deadline: int;
+   description: text;
+   id: nat;
+   reward: nat;
+   status: BountyStatus;
+   title: text;
+   updated_at: int;
+ };
+service : {
+  acceptSubmission: (submission_id: nat) -> (Result);
+  checkExpiredBounties: () -> (nat);
+  createBounty: (title: text, description: text, reward: nat, category: 
+   text, deadline: int) -> (BountyResult);
+  getAllBounties: () -> (vec Bounty) query;
+  getBountiesByCategory: (category: text) -> (vec Bounty) query;
+  getBounty: (bounty_id: nat) -> (BountyResult) query;
+  getBountySubmissions: (bounty_id: nat) -> (vec BountySubmission) query;
+  getCreatorBounties: (creator_id: principal) -> (vec Bounty) query;
+  getOpenBounties: () -> (vec Bounty) query;
+  getSubmission: (submission_id: nat) -> (SubmissionResult) query;
+  getUserSubmissions: (user_id: principal) -> (vec BountySubmission) query;
+  rejectSubmission: (submission_id: nat) -> (SubmissionResult);
+  submitSolution: (bounty_id: nat, description: text, solution_link: 
+   text) -> (SubmissionResult);
+  updateBountyStatus: (bounty_id: nat, status: BountyStatus) ->
+   (BountyResult);
+}

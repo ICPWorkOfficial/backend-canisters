@@ -1,0 +1,15 @@
+// Version: 1.0.0
+type User__546751508 =
+  {
+    bio : Text;
+    created_at : Int;
+    email : Text;
+    id : Principal;
+    is_verified : Bool;
+    rating : Float;
+    skills : [Text];
+    username : Text
+  };
+actor {
+  stable var users_entries : [(Principal, User__546751508)]
+};
